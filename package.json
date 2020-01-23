@@ -1,0 +1,36 @@
+{
+  "name": "weatherby",
+  "version": "0.0.1",
+  "description": "A nodejs CLI to ask what the weather is",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "npm run lint",
+    "test": "npm test"
+  },
+  "engines": {
+    "node": ">=12.0.0",
+    "npm": ">=6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nonrational/weatherby.git"
+  },
+  "keywords": [
+    "weather",
+    "node",
+    "nodejs",
+    "javascript"
+  ],
+  "author": "Alan Norton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nonrational/weatherby/issues"
+  },
+  "homepage": "https://github.com/nonrational/weatherby#readme",
+  "bin": {
+    "weatherby": "bin/weatherby"
+  },
+  "dependencies": {
+    "cli": "^1.0.1"
+  }
+}
