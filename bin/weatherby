@@ -4,37 +4,36 @@
 
 process.title = 'weatherby'
 
-const weather = require('weather-js')
+const weather = require('weather-js'),
+      toTitleCase = require('titlecase'),
+      degreeUnits = 'F'
+
 const processArgs = process.argv.slice(2).join(" ")
-const degreeUnits = 'F'
 
 if (!processArgs) {
   console.error("Sir: may I inquire as to your location? Sincerely, Weatherby")
   process.exit(1)
 }
 
-const searchTerms = processArgs.split(",").map(item => item.trim())
+const searchTerms = [...new Set(processArgs.split(",").map(item => item.trim().toLowerCase()))]
 
 function printFormattedWeather(query, err, result) {
-  if (!result.length) {
-    console.error(`[${query}] Unable to get location information.`)
-    return
-  }
-
   const locationName = result[0]['location']['name']
   const currentTemp = result[0]['current']['temperature']
   const currentSky = result[0]['current']['skytext']
 
-  console.log(`[${query}] In ${locationName}, it is ${currentTemp}°${degreeUnits} and ${currentSky}.`)
+  console.log(`[${query}] It is ${currentTemp}°${degreeUnits} and ${currentSky} in ${locationName}.`)
 }
 
 searchTerms.forEach(ele => {
   if (ele){
-    weather.find({search: ele, degreeType: degreeUnits}, function(err, result){
-      if (err) {
-        console.error(`[${ele}] ${err}`)
+    const normalizedQueryStr = toTitleCase(ele)
+
+    weather.find({search: normalizedQueryStr, degreeType: degreeUnits}, function(err, result){
+      if (err || !result.length) {
+        console.error(`[${normalizedQueryStr}] Unable to find weather information. Got error "${err || 'Not Found'}"`)
       } else {
-        printFormattedWeather(ele, err, result)
+        printFormattedWeather(normalizedQueryStr, err, result)
       }
     })
   }
