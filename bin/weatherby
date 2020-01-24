@@ -17,25 +17,24 @@ if (!processArgs) {
 
 const searchTerms = [...new Set(processArgs.split(",").map(item => item.trim().toLowerCase()))]
 
-function printFormattedWeather(query, err, result) {
-  const locationName = result[0]['location']['name']
-  const currentTemp = result[0]['current']['temperature']
-  const currentSky = result[0]['current']['skytext']
+function weatherFindResult(weatherOpts, err, result) {
+  if (err || !result.length) {
+    console.error(`[${weatherOpts.search}] Unable to find weather information. Got error "${err || 'Not Found'}"`)
+    return
+  }
 
-  console.log(`[${query}] It is ${currentTemp}°${degreeUnits} and ${currentSky} in ${locationName}.`)
+  const locationName = result[0]['location']['name'],
+        currentTemp = result[0]['current']['temperature'],
+        currentSky = result[0]['current']['skytext']
+
+  console.log(`[${weatherOpts.search}] It is ${currentTemp}°${degreeUnits} and ${currentSky} in ${locationName}.`)
 }
 
 searchTerms.forEach(ele => {
-  if (ele){
-    const normalizedQueryStr = toTitleCase(ele)
+  const weatherOpts = {search: toTitleCase(ele), degreeType: degreeUnits}
 
-    weather.find({search: normalizedQueryStr, degreeType: degreeUnits}, function(err, result){
-      if (err || !result.length) {
-        console.error(`[${normalizedQueryStr}] Unable to find weather information. Got error "${err || 'Not Found'}"`)
-      } else {
-        printFormattedWeather(normalizedQueryStr, err, result)
-      }
-    })
+  if (ele) {
+    weather.find(weatherOpts, (err, result) => weatherFindResult(weatherOpts, err, result))
   }
 })
 
