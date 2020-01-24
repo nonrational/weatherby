@@ -31,6 +31,6 @@
     "weatherby": "bin/weatherby"
   },
   "dependencies": {
-    "cli": "^1.0.1"
+    "weather-js": "^2.0.0"
   }
 }

@@ -1,0 +1,42 @@
+#!/usr/bin/env node
+
+'use strict'
+
+process.title = 'weatherby'
+
+const weather = require('weather-js')
+const processArgs = process.argv.slice(2).join(" ")
+const degreeUnits = 'F'
+
+if (!processArgs) {
+  console.error("Sir: may I inquire as to your location? Sincerely, Weatherby")
+  process.exit(1)
+}
+
+const searchTerms = processArgs.split(",").map(item => item.trim())
+
+function printFormattedWeather(query, err, result) {
+  if (!result.length) {
+    console.error(`[${query}] Unable to get location information.`)
+    return
+  }
+
+  const locationName = result[0]['location']['name']
+  const currentTemp = result[0]['current']['temperature']
+  const currentSky = result[0]['current']['skytext']
+
+  console.log(`[${query}] In ${locationName}, it is ${currentTemp}°${degreeUnits} and ${currentSky}.`)
+}
+
+searchTerms.forEach(ele => {
+  if (ele){
+    weather.find({search: ele, degreeType: degreeUnits}, function(err, result){
+      if (err) {
+        console.error(`[${ele}] ${err}`)
+      } else {
+        printFormattedWeather(ele, err, result)
+      }
+    })
+  }
+})
+
