@@ -30,12 +30,12 @@ When you're done, push your code to a GitHub repo and share the link here.
 If you have any questions please email keenahn@invisible.email
 
 # Tasks
-- [ ] set up a node environment
-- [ ] parse CSV arguments of locations
-- [ ] normalize those locations (or find an api that can tolerate any location-like string)
-- [ ] given a location-like string, ask what the weather is
-- [ ] for each location, print the normalized version and the current weather
-- [ ] if the API returns an error (as in no normalized location can be found), print that at the end.
+- [x] set up a node environment
+- [x] parse CSV arguments of locations
+- [x] normalize those locations (or find an api that can tolerate any location-like string)
+- [x] given a location-like string, ask what the weather is
+- [x] for each location, print the normalized version and the current weather
+- [x] if the API returns an error (as in no normalized location can be found), print that at the end.
 - [ ] npm module for s's & g's?
 
 
