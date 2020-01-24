@@ -11,7 +11,7 @@ const weather = require('weather-js'),
 const processArgs = process.argv.slice(2).join(" ")
 
 if (!processArgs) {
-  console.error("Sir: may I inquire as to your location? Sincerely, Weatherby")
+  console.error("May I inquire as to your location? Sincerely, Weatherby")
   process.exit(1)
 }
 
